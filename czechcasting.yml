@@ -1,0 +1,40 @@
+name: czechcasting
+sceneByURL:
+  - action: scrapeXPath
+    url:
+      - czechcasting.com/
+    scraper: sceneScraper
+xPathScrapers:
+  sceneScraper:
+    common:
+      $studio: //*[@id="logo"]/a/img/@alt
+    scene:
+      Title:
+        selector: /html/head/title/text()
+        postProcess:
+          - replace:
+              - regex: "^CZECH CASTING - "
+                with: ""
+              - regex: " :: Czech Casting$"
+                with: "" 
+             #- regex: [A-Z]
+             #   with: [a-z]
+             #- regex: [ ][a-z]
+             #   with: [A-Z]
+             #- regex: ^[a-z]
+             #   with: [A-Z]  
+
+      Details: //div[@class="description show-desc"]
+      Tags:
+        Name: //*[@id="girl-info"]/div/div/ul[@class='tags']/li/a[@class='tag']/text()
+      Studio:
+        Name:
+          fixed: "Czech Casting"
+      Image:
+        selector: //video/@poster
+      Date:
+        selector: //p[@class='updated']/text()
+        postProcess:
+          - parseDate: 01/02/2006
+
+# Last Updated December 30, 2020

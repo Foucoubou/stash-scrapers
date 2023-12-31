@@ -1,0 +1,53 @@
+name: "SexLikeReal"
+sceneByURL:
+  - action: scrapeXPath
+    url:
+      - sexlikereal.com
+    scraper: sceneScraper
+xPathScrapers:
+  sceneScraper:
+    scene:
+      Title: 
+        selector: //script[@type="text/javascript"][contains(.,"videoData:")]/text()
+        postProcess:
+            - replace:
+                - regex:  '.+videoData:\s{[^{]+title":"([^"]+)",.+'
+                  with: $1
+                - regex: '\\u2019'
+                  with: "’"
+
+      Code: &codeSel
+        selector: //meta[@name="twitter:image"]/@content
+        postProcess:
+          - replace:
+            - regex: ^.*\/images\/
+              with: ""
+          - replace:
+            - regex: \/.*
+              with: ""
+
+
+      Date: //time/@datetime
+      Details: &detailsSel
+        selector: //div[@data-qa="scene-about-tab-text"]//text()
+        concat: " "
+      Tags:
+        Name: //meta[@property="video:tag"]/@content
+      Performers:
+        Name: //meta[@property="video:actor"]/@content
+      Studio:
+        Name: 
+          selector: //a[contains(@href,"/studios/")]/div[last()]/text()
+          postProcess:
+              - map:
+                  LustReality: "Lust Reality"
+                  DDFNetworkVR: "DDF Network VR"
+                  POVcentralVR: "POV Central"
+                  RealHotVR: "Real Hot VR"
+                  WankitnowVR: "Wank It Now VR"
+                  VirtualXPorn: "Virtual X Porn"
+                  SinsVR: "XSinsVR"
+                  LethalHardcoreVR: "Lethal Hardcore VR"
+      Image: //div[contains(@class,"splash-screen")]/img/@src
+
+# Last Updated August 29, 2022

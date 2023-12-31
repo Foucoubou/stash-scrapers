@@ -1,0 +1,27 @@
+name: "FuckPassVR"
+sceneByURL:
+  - action: scrapeXPath
+    url:
+      - fuckpassvr.com/video/
+    scraper: sceneScraper
+
+xPathScrapers:
+  sceneScraper:
+    common:
+    scene:
+      Title:  //h1[@class="fz20 blackbold"]
+      Date: &dateAttr
+        selector: //div[@class = "v-window-item v-window-item--active"]//p[4]/text()
+        postProcess:
+          - parseDate: Jan 02 2006
+      Details: &detailsSel //p[@class = "description"]
+      Tags:
+        Name: //span[@class="cursor-hands-tags v-chip v-chip--clickable theme--light v-size--default white--text"]/span
+      Performers:
+        Name: //div[@class="d-flex customer-control align-center customer-control--md"]/div/span
+      Image: &imageSel //div[@class="deo-cover"]/@style
+      Studio:
+        Name:
+          fixed: "FuckPassVR"
+# Last Updated August 24, 2022
+
