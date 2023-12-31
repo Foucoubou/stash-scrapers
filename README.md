@@ -1,2 +1,2 @@
 # stash-scrapers
-My stash Scrapers
+My stash Scrapers - some edited from the inventory
